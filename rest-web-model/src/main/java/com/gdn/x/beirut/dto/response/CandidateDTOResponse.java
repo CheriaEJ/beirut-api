@@ -1,7 +1,5 @@
 package com.gdn.x.beirut.dto.response;
 
-import java.util.Set;
-
 import com.gdn.common.web.base.BaseResponse;
 
 public class CandidateDTOResponse extends BaseResponse {
@@ -11,7 +9,8 @@ public class CandidateDTOResponse extends BaseResponse {
   private String firstName;
   private String lastName;
   private String phoneNumber;
-  private Set<CandidatePositionDTOResponse> candidatePositions;
+  private boolean markForDelete;
+  // private Set<CandidatePositionDTOResponse> candidatePositions;
 
   public CandidateDetailDTOResponse getCandidateDetail() {
     return candidateDetail;
@@ -21,16 +20,20 @@ public class CandidateDTOResponse extends BaseResponse {
     return emailAddress;
   }
 
-  public String getFirstname() {
+  public String getFirstName() {
     return firstName;
   }
 
-  public String getLastname() {
+  public String getLastName() {
     return lastName;
   }
 
-  public String getPhonenumber() {
+  public String getPhoneNumber() {
     return phoneNumber;
+  }
+
+  public boolean isMarkForDelete() {
+    return markForDelete;
   }
 
   public void setCandidateDetail(CandidateDetailDTOResponse candidateDetail) {
@@ -41,15 +44,19 @@ public class CandidateDTOResponse extends BaseResponse {
     this.emailAddress = emailAddress;
   }
 
-  public void setFirstname(String firstName) {
+  public void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 
-  public void setLastname(String lastName) {
+  public void setLastName(String lastName) {
     this.lastName = lastName;
   }
 
-  public void setPhonenumber(String phoneNumber) {
+  public void setMarkForDelete(boolean markForDelete) {
+    this.markForDelete = markForDelete;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
 

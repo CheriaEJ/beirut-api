@@ -103,12 +103,11 @@ public class PositionController {
     Position temp = new Position();
     dozerMapper.map(positionDTORequest, temp);
     temp.setStoreId(storeId);
-
     return new GdnBaseRestResponse(this.positionService.insertNewPosition(temp));
   }
 
-  public void setDozerMapper(Mapper dm){
-    this.dozerMapper=dm;
+  public void setDozerMapper(Mapper dm) {
+    this.dozerMapper = dm;
   }
 
   @RequestMapping(value = "/api/position/updatePosition", method = RequestMethod.POST,
@@ -122,7 +121,8 @@ public class PositionController {
     dozerMapper.map(positionDTORequest, pos);
     pos.setStoreId(storeId);
 
-    return new GdnBaseRestResponse(this.positionService.updatePositionTitle(positionDTORequest.getId(), positionDTORequest.getTitle()));
+    return new GdnBaseRestResponse(this.positionService
+        .updatePositionTitle(positionDTORequest.getId(), positionDTORequest.getTitle()));
   }
 }
 

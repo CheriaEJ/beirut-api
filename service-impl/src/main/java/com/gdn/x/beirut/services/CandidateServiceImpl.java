@@ -56,7 +56,7 @@ public class CandidateServiceImpl implements CandidateService {
     if (candidate == null) {
       throw new ApplicationException(ErrorCategory.DATA_NOT_FOUND);
     } else {
-      return candidate.getCandidatedetail();
+      return candidate.getCandidateDetail();
     }
   }
 
@@ -82,33 +82,33 @@ public class CandidateServiceImpl implements CandidateService {
   }
 
   @Override
-  public List<Candidate> searchByFirstname(String firstname) {
+  public List<Candidate> searchByFirstName(String firstname) {
     // TODO Auto-generated method stub
-    return this.candidateDao.findByFirstnameLike(firstname);
+    return this.candidateDao.findByFirstNameLike(firstname);
   }
 
   @Override
-  public List<Candidate> searchByLastname(String lastname) {
+  public List<Candidate> searchByLastName(String lastname) {
     // TODO Auto-generated method stub
-    return this.candidateDao.findByLastnameLike(lastname);
+    return this.candidateDao.findByLastNameLike(lastname);
   }
 
   @Override
   public List<Candidate> searchCandidateByEmailAddress(String emailAddress) {
     // TODO Auto-generated method stub
-    return this.candidateDao.findByEmailaddress(emailAddress);
+    return this.candidateDao.findByEmailAddress(emailAddress);
   }
 
   @Override
   public List<Candidate> searchCandidateByPhoneNumber(String phoneNumber) {
     // TODO Auto-generated method stub
-    return this.candidateDao.findByPhonenumber(phoneNumber);
+    return this.candidateDao.findByPhoneNumber(phoneNumber);
   }
 
   @Override
   public List<Candidate> searchCandidateByPhoneNumberLike(String phoneNumber) {
     // TODO Auto-generated method stub
-    return this.candidateDao.findByPhonenumberLike(phoneNumber);
+    return this.candidateDao.findByPhoneNumberLike(phoneNumber);
   }
 
   @Override
@@ -119,9 +119,23 @@ public class CandidateServiceImpl implements CandidateService {
     if (candidate == null) {
       throw new ApplicationException(ErrorCategory.DATA_NOT_FOUND);
     } else {
-      candidate.setCandidatedetail(candidateDetail);
+      candidate.setCandidateDetail(candidateDetail);
       this.candidateDao.save(candidate);
     }
   }
+
+
+  // @Override
+  // public boolean setCandidatePositionStatus(String idCandidatePosition, Status newStatus) {
+  // // TODO Auto-generated method stub
+  // // 1. insert new status log...
+  // // 2. update status candidateposition (yang saat ini)
+  // CandidatePosition candidatePostition =
+  // this.candidateDao.findCandidatePositionById(idCandidatePosition);
+  // StatusLog newStatusLog = new StatusLog();
+  // newStatusLog.setStatus(newStatus);
+  // newStatusLog.setCandidatePosition(candidatePostition);
+  // return false;
+  // }
 
 }

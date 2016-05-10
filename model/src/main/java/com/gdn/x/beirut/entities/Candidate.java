@@ -17,31 +17,35 @@ import com.gdn.common.base.entity.GdnBaseEntity;
 @Table(name = "Candidate")
 public class Candidate extends GdnBaseEntity {
 
-  public static final String EMAIL_ADDRESS = "emailaddress";
+  public static final String EMAIL_ADDRESS = "emailAddress";
 
-  public static final String FIRST_NAME = "firstname";
+  public static final String FIRST_NAME = "firstName";
 
-  public static final String LAST_NAME = "lastname";
+  public static final String LAST_NAME = "lastName";
 
-  public static final String PHONE_NUMBER = "phonenumber";
+  public static final String PHONE_NUMBER = "phoneNumber";
 
   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "candidate")
-  private CandidateDetail candidatedetail;
+  private CandidateDetail candidateDetail;
 
   @Column(name = Candidate.EMAIL_ADDRESS)
-  private String emailaddress;
+  private String emailAddress;
 
   @Column(name = Candidate.FIRST_NAME)
-  private String firstname;
+  private String firstName;
 
   @Column(name = Candidate.LAST_NAME)
-  private String lastname;
+  private String lastName;
 
   @Column(name = Candidate.PHONE_NUMBER)
-  private String phonenumber;
+  private String phoneNumber;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "candidate")
   private Set<CandidatePosition> candidatePositions;
+
+  public Candidate() {
+    super();
+  }
 
   public Candidate(String STORE_ID) {
     super();
@@ -57,91 +61,92 @@ public class Candidate extends GdnBaseEntity {
     if (getClass() != obj.getClass())
       return false;
     final Candidate other = (Candidate) obj;
-    if (candidatedetail == null) {
-      if (other.candidatedetail != null)
+    if (candidateDetail == null) {
+      if (other.candidateDetail != null)
         return false;
-    } else if (!candidatedetail.equals(other.candidatedetail))
+    } else if (!candidateDetail.equals(other.candidateDetail))
       return false;
-    if (emailaddress == null) {
-      if (other.emailaddress != null)
+    if (emailAddress == null) {
+      if (other.emailAddress != null)
         return false;
-    } else if (!emailaddress.equals(other.emailaddress))
+    } else if (!emailAddress.equals(other.emailAddress))
       return false;
-    if (firstname == null) {
-      if (other.firstname != null)
+    if (firstName == null) {
+      if (other.firstName != null)
         return false;
-    } else if (!firstname.equals(other.firstname))
+    } else if (!firstName.equals(other.firstName))
       return false;
-    if (lastname == null) {
-      if (other.lastname != null)
+    if (lastName == null) {
+      if (other.lastName != null)
         return false;
-    } else if (!lastname.equals(other.lastname))
+    } else if (!lastName.equals(other.lastName))
       return false;
-    if (phonenumber == null) {
-      if (other.phonenumber != null)
+    if (phoneNumber == null) {
+      if (other.phoneNumber != null)
         return false;
-    } else if (!phonenumber.equals(other.phonenumber))
+    } else if (!phoneNumber.equals(other.phoneNumber))
       return false;
     return true;
   }
 
-  public CandidateDetail getCandidatedetail() {
-    return this.candidatedetail;
+
+  public CandidateDetail getCandidateDetail() {
+    return candidateDetail;
   }
 
   public Set<CandidatePosition> getCandidatePositions() {
-    return this.candidatePositions;
+    return candidatePositions;
   }
 
-  public String getEmailaddress() {
-    return this.emailaddress;
+  public String getEmailAddress() {
+    return emailAddress;
   }
 
-  public String getFirstname() {
-    return this.firstname;
+  public String getFirstName() {
+    return firstName;
   }
 
-  public String getLastname() {
-    return this.lastname;
+  public String getLastName() {
+    return lastName;
   }
 
-  public String getPhonenumber() {
-    return this.phonenumber;
+  public String getPhoneNumber() {
+    return phoneNumber;
   }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + ((candidatedetail == null) ? 0 : candidatedetail.hashCode());
-    result = prime * result + ((emailaddress == null) ? 0 : emailaddress.hashCode());
-    result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
-    result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
-    result = prime * result + ((phonenumber == null) ? 0 : phonenumber.hashCode());
+    result = prime * result + ((candidateDetail == null) ? 0 : candidateDetail.hashCode());
+    result = prime * result + ((emailAddress == null) ? 0 : emailAddress.hashCode());
+    result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+    result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+    result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
     return result;
   }
 
-  public void setCandidatedetail(CandidateDetail candidatedetail) {
-    this.candidatedetail = candidatedetail;
+  public void setCandidateDetail(CandidateDetail candidateDetail) {
+    this.candidateDetail = candidateDetail;
   }
 
   public void setCandidatePositions(Set<CandidatePosition> candidatePositions) {
     this.candidatePositions = candidatePositions;
   }
 
-  public void setEmailaddress(String emailaddress) {
-    this.emailaddress = emailaddress;
+  public void setEmailAddress(String emailAddress) {
+    this.emailAddress = emailAddress;
   }
 
-  public void setFirstname(String firstname) {
-    this.firstname = firstname;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
 
-  public void setLastname(String lastname) {
-    this.lastname = lastname;
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 
-  public void setPhonenumber(String phonenumber) {
-    this.phonenumber = phonenumber;
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
   }
 }

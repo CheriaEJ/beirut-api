@@ -11,15 +11,24 @@ import javax.persistence.Table;
 
 import com.gdn.common.base.entity.GdnBaseEntity;
 
+
 @Entity
 @Table(name = "StatusLog")
 public class StatusLog extends GdnBaseEntity {
 
-  @Column(name = "oldStatus")
-  private Status oldStatus;
+  // @Column(name = "newStatus")
+  // private enum newStatus {
+  // OPEN, ONHOLD, DECLINED, WITHDRAWL, JOIN
+  // }
 
-  @Column(name = "newStatus")
-  private Status newStatus;
+  // @Column(name = "oldStatus")
+  // private Status oldStatus;
+  //
+  // @Column(name = "newStatus")
+  // private Status newStatus;
+
+  @Column(name = "status")
+  private Status status;
 
   @ManyToOne
   @JoinColumn(name = "candidatePosition")
@@ -33,40 +42,52 @@ public class StatusLog extends GdnBaseEntity {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    StatusLog other = (StatusLog) obj;
-    if (newStatus != other.newStatus)
+    final StatusLog other = (StatusLog) obj;
+    if (candidatePosition == null) {
+      if (other.candidatePosition != null)
+        return false;
+    } else if (!candidatePosition.equals(other.candidatePosition))
       return false;
-    if (oldStatus != other.oldStatus)
+    if (status != other.status)
       return false;
     return true;
   }
 
-  @Column(name = "newStatus")
-  @Enumerated(EnumType.STRING)
-  private Status getNewStatus() {
-    return newStatus;
+  public CandidatePosition getCandidatePosition() {
+    return candidatePosition;
   }
 
-  @Column(name = "oldStatus")
+  @Column(name = "newStatus")
   @Enumerated(EnumType.STRING)
-  private Status getOldStatus() {
-    return oldStatus;
+  private Status getStatus() {
+    return status;
   }
+  //
+  // @Column(name = "oldStatus")
+  // @Enumerated(EnumType.STRING)
+  // private Status getOldStatus() {
+  // return oldStatus;
+  // }
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + ((newStatus == null) ? 0 : newStatus.hashCode());
-    result = prime * result + ((oldStatus == null) ? 0 : oldStatus.hashCode());
+    result = prime * result + ((candidatePosition == null) ? 0 : candidatePosition.hashCode());
+    result = prime * result + ((status == null) ? 0 : status.hashCode());
     return result;
   }
 
-  public void setNewStatus(Status newStatus) {
-    this.newStatus = newStatus;
+  public void setCandidatePosition(CandidatePosition candidatePostition) {
+    // TODO Auto-generated method stub
+    this.candidatePosition = candidatePostition;
   }
 
-  public void setOldStatus(Status oldStatus) {
-    this.oldStatus = oldStatus;
+  public void setStatus(Status newStatus) {
+    this.status = newStatus;
   }
+
+  // public void setOldStatus(Status oldStatus) {
+  // this.oldStatus = oldStatus;
+  // }
 }

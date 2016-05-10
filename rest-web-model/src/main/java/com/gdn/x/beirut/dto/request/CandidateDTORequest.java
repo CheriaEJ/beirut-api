@@ -7,47 +7,47 @@ public class CandidateDTORequest extends BaseRequest {
   private CandidateDetailDTORequest candidateDetail;
   private String emailAddress;
   private String firstName;
-
   private String lastName;
   private String phoneNumber;
 
-  public CandidateDetailDTORequest getCandidatedetail() {
+  public CandidateDetailDTORequest getCandidateDetail() {
     return candidateDetail;
   }
 
-  public String getEmailaddress() {
+  public String getEmailAddress() {
     return emailAddress;
   }
 
-  public String getFirstname() {
+  public String getFirstName() {
     return firstName;
   }
 
-  public String getLastname() {
+  public String getLastName() {
     return lastName;
   }
 
-  public String getPhonenumber() {
+  public String getPhoneNumber() {
     return phoneNumber;
   }
 
-  public void setCandidatedetail(CandidateDetailDTORequest candidatedetail) {
-    this.candidateDetail = candidatedetail;
+  public void setCandidateDetail(CandidateDetailDTORequest candidateDetail) {
+    this.candidateDetail = candidateDetail;
   }
 
-  public void setEmailaddress(String emailaddress) {
-    this.emailAddress = emailaddress;
+  public void setEmailAddress(String emailAddress) {
+    this.emailAddress = emailAddress;
   }
 
-  public void setFirstname(String firstname) {
-    this.firstName = firstname;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
 
-  public void setLastname(String lastname) {
-    this.lastName = lastname;
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 
-  public void setPhonenumber(String phonenumber) {
-    this.phoneNumber = phonenumber;
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
   }
+
 }

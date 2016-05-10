@@ -17,50 +17,54 @@ import com.gdn.common.base.entity.GdnBaseEntity;
 @Table(name = "CandidatePosition")
 public class CandidatePosition extends GdnBaseEntity {
 
-	@Column(name = "status")
-	private Status status;
-	
-	@ManyToOne
-	@JoinColumn(name = "position_id")
-	private Position position;
-	
-	@ManyToOne
-	@JoinColumn(name = "candidate_id")
-	private Candidate candidate;
-	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "candidatePosition")
-	private Set<StatusLog> statusLogs;
-	
-	public Set<StatusLog> getStatusLogs() {
-		return statusLogs;
-	}
+  @Column(name = "status")
+  private Status status;
 
-	public void setStatusLogs(Set<StatusLog> statusLogs) {
-		this.statusLogs = statusLogs;
-	}
+  @ManyToOne
+  @JoinColumn(name = "position_id")
+  private Position position;
 
-	public Status getStatus() {
-		return status;
-	}
+  @ManyToOne
+  @JoinColumn(name = "candidate_id")
+  private Candidate candidate;
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "candidatePosition")
+  private Set<StatusLog> statusLogs;
 
-	public Position getPosition() {
-		return position;
-	}
+  public CandidatePosition() {
+    super();
+  }
 
-	public void setPosition(Position position) {
-		this.position = position;
-	}
+  public Candidate getCandidate() {
+    return candidate;
+  }
 
-	public Candidate getCandidate() {
-		return candidate;
-	}
+  public Position getPosition() {
+    return position;
+  }
 
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
-	}
-	
+  public Status getStatus() {
+    return status;
+  }
+
+  public Set<StatusLog> getStatusLogs() {
+    return statusLogs;
+  }
+
+  public void setCandidate(Candidate candidate) {
+    this.candidate = candidate;
+  }
+
+  public void setPosition(Position position) {
+    this.position = position;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
+
+  public void setStatusLogs(Set<StatusLog> statusLogs) {
+    this.statusLogs = statusLogs;
+  }
+
 }

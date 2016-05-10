@@ -25,6 +25,10 @@ public class CandidateDetail extends GdnBaseEntity {
   @Column(name = CandidateDetail.CONTENT)
   private byte[] content;
 
+  public CandidateDetail() {
+    super();
+  }
+
   public CandidateDetail(String STORE_ID) {
     super();
     this.setStoreId(STORE_ID);

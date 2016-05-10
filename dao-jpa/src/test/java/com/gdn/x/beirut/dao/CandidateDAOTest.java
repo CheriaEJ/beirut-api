@@ -25,6 +25,7 @@ import com.gdn.x.beirut.entities.CandidateDetail;
     DirtiesContextTestExecutionListener.class, TransactionalTestExecutionListener.class})
 @Transactional(readOnly = false)
 public class CandidateDAOTest {
+
   @Autowired
   private CandidateDAO candidateDAO;
 
@@ -33,24 +34,24 @@ public class CandidateDAOTest {
 
     for (int i = 0; i < 10; i++) {
       Candidate newCandidate = new Candidate("1");
-      newCandidate.setEmailaddress("egaprianto" + i + "@asd.com");
-      newCandidate.setFirstname("Ega");
-      newCandidate.setLastname("Prianto");
-      newCandidate.setPhonenumber("123456789" + i);
+      newCandidate.setEmailAddress("egaprianto" + i + "@asd.com");
+      newCandidate.setFirstName("Ega");
+      newCandidate.setLastName("Prianto");
+      newCandidate.setPhoneNumber("123456789" + i);
       CandidateDetail candDetail = new CandidateDetail("1");
       candDetail.setContent(("ini PDF" + i).getBytes());
-      newCandidate.setCandidatedetail(candDetail);
+      newCandidate.setCandidateDetail(candDetail);
       this.candidateDAO.save(newCandidate);
     }
 
     Candidate newCandidate = new Candidate("1");
-    newCandidate.setEmailaddress("egaprianto@asd.com");
-    newCandidate.setFirstname("Ega");
-    newCandidate.setLastname("Prianto");
-    newCandidate.setPhonenumber("1234567890");
+    newCandidate.setEmailAddress("egaprianto@asd.com");
+    newCandidate.setFirstName("Ega");
+    newCandidate.setLastName("Prianto");
+    newCandidate.setPhoneNumber("1234567890");
     CandidateDetail candDetail = new CandidateDetail("1");
     candDetail.setContent(("ini PDF").getBytes());
-    newCandidate.setCandidatedetail(candDetail);
+    newCandidate.setCandidateDetail(candDetail);
     this.candidateDAO.save(newCandidate);
   }
 
@@ -76,82 +77,76 @@ public class CandidateDAOTest {
   }
 
   @Test
-  public void testFindByEmailaddress() {
-    List<Candidate> res = this.candidateDAO.findByEmailaddress("egaprianto1@asd.com");
-    Assert.assertNotNull(res.get(0).getFirstname());
-    Assert.assertNotNull(res.get(0).getEmailaddress());
-    Assert.assertNotNull(res.get(0).getLastname());
-    Assert.assertNotNull(res.get(0).getPhonenumber());
-    Assert.assertNotNull(res.get(0).getCandidatedetail());
-    Assert.assertTrue(new String(res.get(0).getCandidatedetail().getContent()).equals("ini PDF1"));
+  public void testFindByEmailAddress() {
+    List<Candidate> res = this.candidateDAO.findByEmailAddress("egaprianto1@asd.com");
+    Assert.assertNotNull(res.get(0).getFirstName());
+    Assert.assertNotNull(res.get(0).getEmailAddress());
+    Assert.assertNotNull(res.get(0).getLastName());
+    Assert.assertNotNull(res.get(0).getPhoneNumber());
+    Assert.assertNotNull(res.get(0).getCandidateDetail());
+    Assert.assertTrue(new String(res.get(0).getCandidateDetail().getContent()).equals("ini PDF1"));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
   public void testFindByEmailAddressOnlyOneResult() {
-    List<Candidate> res = this.candidateDAO.findByEmailaddress("egaprianto1@asd.com");
+    List<Candidate> res = this.candidateDAO.findByEmailAddress("egaprianto1@asd.com");
     res.get(1);
   }
 
   @Test
-  public void testFindByFirstname() {
-    List<Candidate> res = this.candidateDAO.findByFirstname("Ega");
-    Assert.assertNotNull(res.get(0).getFirstname());
-    Assert.assertNotNull(res.get(0).getEmailaddress());
-    Assert.assertNotNull(res.get(0).getLastname());
-    Assert.assertNotNull(res.get(0).getPhonenumber());
-    Assert.assertNotNull(res.get(0).getCandidatedetail());
-    Assert.assertFalse(new String(res.get(0).getCandidatedetail().getContent())
-        .equals(new String(res.get(1).getCandidatedetail().getContent())));
-    Assert.assertTrue(res.get(0).getFirstname().equals("Ega"));
-    Assert.assertTrue(res.get(0).getFirstname().equals(res.get(1).getFirstname()));
+  public void testFindByFirstName() {
+    List<Candidate> res = this.candidateDAO.findByFirstName("Ega");
+    Assert.assertNotNull(res.get(0).getFirstName());
+    Assert.assertNotNull(res.get(0).getEmailAddress());
+    Assert.assertNotNull(res.get(0).getLastName());
+    Assert.assertNotNull(res.get(0).getPhoneNumber());
+    Assert.assertNotNull(res.get(0).getCandidateDetail());
+    Assert.assertFalse(new String(res.get(0).getCandidateDetail().getContent())
+        .equals(new String(res.get(1).getCandidateDetail().getContent())));
+    Assert.assertTrue(res.get(0).getFirstName().equals("Ega"));
+    Assert.assertTrue(res.get(0).getFirstName().equals(res.get(1).getFirstName()));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
-  public void testFindByFirstnameNoResult() {
-    List<Candidate> res = this.candidateDAO.findByFirstname("asd");
+  public void testFindByFirstNameNoResult() {
+    List<Candidate> res = this.candidateDAO.findByFirstName("asd");
     res.get(0);
   }
 
   @Test
-  public void testFindByLastname() {
-    List<Candidate> res = this.candidateDAO.findByLastname("Prianto");
-    Assert.assertNotNull(res.get(0).getFirstname());
-    Assert.assertNotNull(res.get(0).getEmailaddress());
-    Assert.assertNotNull(res.get(0).getLastname());
-    Assert.assertNotNull(res.get(0).getPhonenumber());
-    Assert.assertNotNull(res.get(0).getCandidatedetail());
-    Assert.assertFalse(new String(res.get(0).getCandidatedetail().getContent())
-        .equals(new String(res.get(1).getCandidatedetail().getContent())));
-    Assert.assertTrue(res.get(0).getLastname().equals("Prianto"));
-    Assert.assertTrue(res.get(0).getLastname().equals(res.get(1).getLastname()));
+  public void testFindByLastName() {
+    List<Candidate> res = this.candidateDAO.findByLastName("Prianto");
+    Assert.assertNotNull(res.get(0).getFirstName());
+    Assert.assertNotNull(res.get(0).getEmailAddress());
+    Assert.assertNotNull(res.get(0).getLastName());
+    Assert.assertNotNull(res.get(0).getPhoneNumber());
+    Assert.assertNotNull(res.get(0).getCandidateDetail());
+    Assert.assertFalse(new String(res.get(0).getCandidateDetail().getContent())
+        .equals(new String(res.get(1).getCandidateDetail().getContent())));
+    Assert.assertTrue(res.get(0).getLastName().equals("Prianto"));
+    Assert.assertTrue(res.get(0).getLastName().equals(res.get(1).getLastName()));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
-  public void testFindByLastnameNoResult() {
-    List<Candidate> res = this.candidateDAO.findByLastname("asd");
+  public void testFindByLastNameNoResult() {
+    List<Candidate> res = this.candidateDAO.findByLastName("asd");
     res.get(0);
   }
 
   @Test
-  public void testFindByPhonenumber() {
-    List<Candidate> res = this.candidateDAO.findByPhonenumber("1234567890");
-    Assert.assertNotNull(res.get(0).getFirstname());
-    Assert.assertNotNull(res.get(0).getEmailaddress());
-    Assert.assertNotNull(res.get(0).getLastname());
-    Assert.assertNotNull(res.get(0).getPhonenumber());
-    Assert.assertNotNull(res.get(0).getCandidatedetail());
-    Assert.assertNotNull(res.get(1).getFirstname());
-    Assert.assertNotNull(res.get(1).getEmailaddress());
-    Assert.assertNotNull(res.get(1).getLastname());
-    Assert.assertNotNull(res.get(1).getPhonenumber());
-    Assert.assertNotNull(res.get(1).getCandidatedetail());
-    Assert.assertTrue(res.get(0).getPhonenumber().equals(res.get(1).getPhonenumber()));
-    Assert.assertFalse(res.get(0).getEmailaddress().equals(res.get(1).getEmailaddress()));
+  public void testFindByPhoneNumber() {
+    List<Candidate> res = this.candidateDAO.findByPhoneNumber("1234567890");
+    Assert.assertNotNull(res.get(0).getFirstName());
+    Assert.assertNotNull(res.get(0).getEmailAddress());
+    Assert.assertNotNull(res.get(0).getLastName());
+    Assert.assertNotNull(res.get(0).getPhoneNumber());
+    Assert.assertNotNull(res.get(0).getCandidateDetail());
+    Assert.assertTrue(res.get(0).getPhoneNumber().equals("1234567890"));
   }
 
   @Test(expected = IndexOutOfBoundsException.class)
-  public void testFindByPhonenumberSupposedOnlyTwoResult() {
-    List<Candidate> res = this.candidateDAO.findByPhonenumber("1234567890");
+  public void testFindByPhoneNumberSupposedOnlyTwoResult() {
+    List<Candidate> res = this.candidateDAO.findByPhoneNumber("1234567890");
     res.get(2);
   }
 

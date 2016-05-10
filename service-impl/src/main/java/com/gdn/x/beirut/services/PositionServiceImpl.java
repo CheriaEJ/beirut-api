@@ -1,6 +1,7 @@
 package com.gdn.x.beirut.services;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -17,44 +18,53 @@ import com.gdn.x.beirut.entities.Position;
 public class PositionServiceImpl implements PositionService {
 
   @Autowired
-  private PositionDAO positionDao;
+  private PositionDAO positionDAO;
 
   @Override
   public List<Position> getAllPosition() {
-    return this.getPositionDao().findByMarkForDelete(false);
+    return positionDAO.findByMarkForDelete(false);
   }
 
   @Override
   public List<Position> getPositionByTitle(String title) {
-    return this.getPositionDao().findByTitleContainingAndMarkForDelete(title, false);
+    // TODO Auto-generated method stub
+    return positionDAO.findByTitleContainingAndMarkForDelete(title, false);
   }
 
   public PositionDAO getPositionDao() {
-    return this.positionDao;
+    return this.positionDAO;
   }
 
   @Override
   @Transactional(readOnly = false)
   public boolean insertNewPosition(Position position) {
-    if (position.getId() == null) {
-      this.getPositionDao().save(position);
-      return true;
+    for (CandidatePosition iterable_element : position.getCandidatePosition()) {
+      iterable_element.setPosition(position);
     }
-    return false;
+    this.getPositionDao().save(position);
+    return true;
   }
 
   @Override
   @Transactional(readOnly = false)
   public void markForDeletePosition(List<String> ids) {
+    System.out.println(ids.toString());
     List<Position> positions = new ArrayList<Position>();
     for (int i = 0; i < ids.size(); i++) {
       Position posi = this.getPositionDao().findByIdAndMarkForDelete(ids.get(i), false);
+      System.out.println("auibiubr");
+      // hibernate initialize kayak gak kepanggil.
       Hibernate.initialize(posi.getCandidatePosition());
-      for (CandidatePosition candpos : posi.getCandidatePosition()) {
+      System.out.println("uhoiaafubrugb");
+      Iterator<CandidatePosition> iterator = posi.getCandidatePosition().iterator();
+      while (iterator.hasNext()) {
+        CandidatePosition candpos = iterator.next();
         candpos.setMarkForDelete(true);
+        System.out.println("aaa" + candpos.isMarkForDelete());
       }
       posi.setMarkForDelete(true);
       positions.add(posi);
+      System.out.println("patricia" + posi.isMarkForDelete() + " " + posi.getTitle());
     }
     this.getPositionDao().save(positions);
   }
@@ -62,12 +72,13 @@ public class PositionServiceImpl implements PositionService {
   @Override
   @Transactional(readOnly = false)
   public boolean updatePositionTitle(String id, String title) {
-    Position posi = this.getPositionDao().findByIdAndMarkForDelete(id, false);
+    Position posi = this.positionDAO.findByIdAndMarkForDelete(id, false);
     if (posi != null) {
       posi.setTitle(title);
-      this.positionDao.save(posi);
+      this.positionDAO.save(posi);
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 }
