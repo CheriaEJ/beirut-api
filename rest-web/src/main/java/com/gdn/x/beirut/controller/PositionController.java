@@ -102,6 +102,7 @@ public class PositionController {
       @RequestParam String username, @RequestBody PositionDTORequest positionDTORequest) {
     Position temp = new Position();
     dozerMapper.map(positionDTORequest, temp);
+    System.out.println(temp.getTitle());
     temp.setStoreId(storeId);
     return new GdnBaseRestResponse(this.positionService.insertNewPosition(temp));
   }
