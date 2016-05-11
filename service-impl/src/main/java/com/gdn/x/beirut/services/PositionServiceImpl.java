@@ -37,11 +37,8 @@ public class PositionServiceImpl implements PositionService {
   @Override
   @Transactional(readOnly = false)
   public boolean insertNewPosition(Position position) {
-    if (position.getId() == null) {
       this.getPositionDao().save(position);
       return true;
-    }
-    return false;
   }
 
   @Override
