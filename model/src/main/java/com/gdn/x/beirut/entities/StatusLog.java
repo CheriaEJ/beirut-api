@@ -13,61 +13,38 @@ import com.gdn.common.base.entity.GdnBaseEntity;
 
 
 @Entity
-@Table(name = "StatusLog")
+@Table(name = StatusLog.TABLE_NAME)
 public class StatusLog extends GdnBaseEntity {
 
-  // @Column(name = "newStatus")
-  // private enum newStatus {
-  // OPEN, ONHOLD, DECLINED, WITHDRAWL, JOIN
-  // }
+  private static final long serialVersionUID = 1950426766708644908L;
+  public static final String TABLE_NAME = "status_log";
+  public static final String COLUMN_STATUS = "status";
+  public static final String COLUMN_CANDIDATE_POSITION_ID = "candidate_position_id";
 
-  // @Column(name = "oldStatus")
-  // private Status oldStatus;
-  //
-  // @Column(name = "newStatus")
-  // private Status newStatus;
-
-  @Column(name = "status")
+  @Column(name = COLUMN_STATUS)
+  @Enumerated(EnumType.STRING)
   private Status status;
 
   @ManyToOne
-  @JoinColumn(name = "candidatePosition")
+  @JoinColumn(name = COLUMN_CANDIDATE_POSITION_ID)
   private CandidatePosition candidatePosition;
 
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (!super.equals(obj))
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    final StatusLog other = (StatusLog) obj;
-    if (candidatePosition == null) {
-      if (other.candidatePosition != null)
-        return false;
-    } else if (!candidatePosition.equals(other.candidatePosition))
-      return false;
-    if (status != other.status)
-      return false;
-    return true;
+  public StatusLog() {
+    // nothing to do here
+  }
+
+  public StatusLog(CandidatePosition candidatePosition, Status status) {
+    this.candidatePosition = candidatePosition;
+    this.status = status;
   }
 
   public CandidatePosition getCandidatePosition() {
     return candidatePosition;
   }
 
-  @Column(name = "newStatus")
-  @Enumerated(EnumType.STRING)
-  private Status getStatus() {
+  public Status getStatus() {
     return status;
   }
-  //
-  // @Column(name = "oldStatus")
-  // @Enumerated(EnumType.STRING)
-  // private Status getOldStatus() {
-  // return oldStatus;
-  // }
 
   @Override
   public int hashCode() {
@@ -79,7 +56,6 @@ public class StatusLog extends GdnBaseEntity {
   }
 
   public void setCandidatePosition(CandidatePosition candidatePostition) {
-    // TODO Auto-generated method stub
     this.candidatePosition = candidatePostition;
   }
 

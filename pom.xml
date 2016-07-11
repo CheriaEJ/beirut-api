@@ -16,6 +16,19 @@
   <build>
     <pluginManagement>
       <plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-failsafe-plugin</artifactId>
+			<version>2.19.1</version>
+			<executions>
+			<execution>
+			<goals>
+				<goal>integration-test</goal>
+				<goal>verify</goal>
+			</goals>
+			</execution>
+			</executions>
+		</plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
@@ -112,7 +125,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
       </plugin>
-    </plugins>
+	</plugins>
   </build>
   <properties>
     <maven.project.groupId>${project.groupId}</maven.project.groupId>
@@ -145,8 +158,8 @@
     <spring-data-rest-webmvc-version>2.8.2.RELEASE</spring-data-rest-webmvc-version>
     <javax.inject-version>1</javax.inject-version>
     <logback-core-version>1.1.3</logback-core-version>
-    <gdn-common-base-version>3.0.0</gdn-common-base-version>
-    <gdn-base-rest-web-version>4.3.1</gdn-base-rest-web-version>
+    <gdn-common-base-version>4.2.0</gdn-common-base-version>
+    <gdn-base-rest-web-version>5.2.0</gdn-base-rest-web-version>
     <swagger-springmvc.version>1.0.1</swagger-springmvc.version>
     <freemarker-version>2.3.22</freemarker-version>
     <jsonpath-version>2.0.0</jsonpath-version>
@@ -322,6 +335,21 @@
         <artifactId>beirut-model</artifactId>
         <version>${project.version}</version>
       </dependency>
+	  <dependency>
+        <groupId>com.gdn.x.beirut</groupId>
+        <artifactId>beirut-solr-model</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+	  <dependency>
+        <groupId>com.gdn.x.beirut</groupId>
+        <artifactId>beirut-solr-service-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+	  <dependency>
+        <groupId>com.gdn.x.beirut</groupId>
+        <artifactId>beirut-solr-service-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.gdn.x.beirut</groupId>
         <artifactId>beirut-dao-api</artifactId>
@@ -340,6 +368,11 @@
       <dependency>
         <groupId>com.gdn.x.beirut</groupId>
         <artifactId>beirut-service-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.gdn.x.beirut</groupId>
+        <artifactId>beirut-domain-event</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -625,5 +658,9 @@
     <module>rest-web-model</module>
     <module>rest-web</module>
     <module>client-java-sdk</module>
+    <module>domain-event</module>
+	<module>solr-model</module>
+	<module>solr-service-api</module>
+	<module>solr-service-impl</module>
   </modules>
 </project>

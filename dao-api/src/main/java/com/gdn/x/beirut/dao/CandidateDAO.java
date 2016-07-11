@@ -3,31 +3,45 @@ package com.gdn.x.beirut.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gdn.x.beirut.entities.Candidate;
 
-
 public interface CandidateDAO extends JpaRepository<Candidate, String> {
-  // List<CandidatePosition> findAllCandidatePositions();
 
-  List<Candidate> findByCreatedDateBetween(Date start, Date end);
+  Page<Candidate> findByCreatedDateBetweenAndStoreId(Date start, Date end, String storeId,
+      Pageable pageable);
 
-  List<Candidate> findByEmailAddress(String emailaddress);
+  Candidate findByEmailAddressAndStoreId(String emailAddress, String storeId);
 
-  List<Candidate> findByFirstName(String firstname);
+  @Deprecated
+  List<Candidate> findByFirstName(String firstName);
 
-  List<Candidate> findByFirstNameLike(String firstname);
+  Page<Candidate> findByFirstNameContainingAndStoreId(String firstName, String storeId,
+      Pageable pageable);
 
-  List<Candidate> findByLastName(String lastname);
+  Candidate findByIdAndMarkForDelete(String id, boolean markForDelete);
 
-  List<Candidate> findByLastNameLike(String lastname);
+  @Deprecated
+  List<Candidate> findByLastName(String lastName);
 
-  List<Candidate> findByPhoneNumber(String phonenumber);
+  Page<Candidate> findByLastNameContainingAndStoreId(String lastName, String storeId,
+      Pageable pageable);
 
-  List<Candidate> findByPhoneNumberLike(String phonenumber);
-  // @Query("from CandidatePosition where id = :id")
-  // CandidatePosition findCandidatePositionById(@[param("id") String id);
-  //
-  // }
+  @Deprecated
+  List<Candidate> findByPhoneNumber(String phoneNumber);
+
+  Page<Candidate> findByPhoneNumberContainingAndStoreId(String phoneNumber, String storeId,
+      Pageable pageable);
+
+  @Deprecated
+  List<Candidate> findByStoreId(String storeId);
+
+  Page<Candidate> findByStoreId(String storeId, Pageable pageable);
+
+  Page<Candidate> findByStoreIdAndMarkForDelete(String storeId, boolean markForDelete,
+      Pageable pageable);
+
 }

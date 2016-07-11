@@ -3,6 +3,8 @@ package com.gdn.x.beirut.dto.response;
 import com.gdn.common.web.base.BaseResponse;
 
 public class CandidateDetailDTOResponse extends BaseResponse {
+
+  private static final long serialVersionUID = 808732336048185462L;
   private byte[] content;
 
   public CandidateDetailDTOResponse() {

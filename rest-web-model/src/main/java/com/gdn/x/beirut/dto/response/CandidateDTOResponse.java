@@ -4,13 +4,13 @@ import com.gdn.common.web.base.BaseResponse;
 
 public class CandidateDTOResponse extends BaseResponse {
 
+  private static final long serialVersionUID = -359419677282632955L;
   private CandidateDetailDTOResponse candidateDetail;
   private String emailAddress;
   private String firstName;
   private String lastName;
   private String phoneNumber;
   private boolean markForDelete;
-  // private Set<CandidatePositionDTOResponse> candidatePositions;
 
   public CandidateDetailDTOResponse getCandidateDetail() {
     return candidateDetail;

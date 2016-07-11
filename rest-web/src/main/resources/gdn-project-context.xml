@@ -2,24 +2,38 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:context="http://www.springframework.org/schema/context" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
   xmlns:task="http://www.springframework.org/schema/task" xmlns:metrics="http://www.ryantenney.com/schema/metrics"
+  xmlns:solr="http://www.springframework.org/schema/data/solr"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+<<<<<<< HEAD
 		http://www.ryantenney.com/schema/metrics http://www.ryantenney.com/schema/metrics/metrics-3.0.xsd">
   <import resource="classpath:gdn-jpa-configuration.xml" />
   <bean id="dozerMapper" class ="org.dozer.DozerBeanMapper"/>
   
+=======
+		http://www.ryantenney.com/schema/metrics http://www.ryantenney.com/schema/metrics/metrics-3.0.xsd
+		http://www.springframework.org/schema/data/solr http://www.springframework.org/schema/data/solr/spring-solr.xsd">
+  <context:property-placeholder
+    location="file:///${X_CONF_DIR}/beirut/beirut.properties,file:///${X_CONF_DIR}/beirut/domain-event-publisher.properties,file:///${X_CONF_DIR}/beirut/domain-event-subscriber.properties,file:///${X_CONF_DIR}/beirut/solr.properties"
+    properties-ref="applicationDefaultProperties" ignore-resource-not-found="true" ignore-unresolvable="true" />
+  <import resource="classpath:gdn-jpa-configuration.xml" />
+  <import resource="classpath:*domain-event-publisher-context.xml" />
+  <import resource="classpath:*gdn-dozer-configuration.xml" />
+  <import resource="classpath:*domain-event-subscriber-context.xml" />
+  <import resource="classpath:*gdn-solr-configuration.xml" />
+  <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+  <solr:repositories base-package="com.gdn.x.beirut.solr.dao" multicore-support="true" />
+>>>>>>> a53d522d7aab620bb9c6bcfcf834701917be7b54
   <jpa:repositories base-package="com.gdn.x.beirut.dao" />
   <context:component-scan base-package="com.gdn.x.beirut.services" />
+  <context:component-scan base-package="com.gdn.x.beirut.solr.services" />
   <!-- <context:component-scan base-package="com.gdn.x.productcategorybase.config" /> -->
-  <context:property-placeholder location="file:///${X_CONF_DIR}/beirut/beirut.properties"
-    properties-ref="applicationDefaultProperties" ignore-resource-not-found="true" ignore-unresolvable="true" />
   <task:executor id="taskExecutor" queue-capacity="10" pool-size="${thread.pool.size}" rejection-policy="CALLER_RUNS" />
   <bean id="executorService" class="org.springframework.core.task.support.ExecutorServiceAdapter">
     <constructor-arg ref="taskExecutor" />
   </bean>
   <bean id="healthCheckRedis" class="com.gdn.x.base.rest.web.healthcheck.HealthCheckRedis" />
   <bean id="healthCheckPostgreSql" class="com.gdn.x.base.rest.web.healthcheck.HealthCheckPostgreSql" />
-
 </beans>

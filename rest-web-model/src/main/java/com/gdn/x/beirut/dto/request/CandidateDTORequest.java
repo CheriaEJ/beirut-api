@@ -1,18 +1,18 @@
 package com.gdn.x.beirut.dto.request;
 
+import java.util.List;
+
 import com.gdn.common.web.base.BaseRequest;
 
 public class CandidateDTORequest extends BaseRequest {
 
-  private CandidateDetailDTORequest candidateDetail;
+  private static final long serialVersionUID = 3040418122981154523L;
+  private String id;
   private String emailAddress;
   private String firstName;
   private String lastName;
   private String phoneNumber;
-
-  public CandidateDetailDTORequest getCandidateDetail() {
-    return candidateDetail;
-  }
+  private List<String> positionIds;
 
   public String getEmailAddress() {
     return emailAddress;
@@ -20,6 +20,10 @@ public class CandidateDTORequest extends BaseRequest {
 
   public String getFirstName() {
     return firstName;
+  }
+
+  public String getId() {
+    return id;
   }
 
   public String getLastName() {
@@ -30,8 +34,8 @@ public class CandidateDTORequest extends BaseRequest {
     return phoneNumber;
   }
 
-  public void setCandidateDetail(CandidateDetailDTORequest candidateDetail) {
-    this.candidateDetail = candidateDetail;
+  public List<String> getPositionIds() {
+    return positionIds;
   }
 
   public void setEmailAddress(String emailAddress) {
@@ -42,6 +46,10 @@ public class CandidateDTORequest extends BaseRequest {
     this.firstName = firstName;
   }
 
+  public void setId(String id) {
+    this.id = id;
+  }
+
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
@@ -49,5 +57,10 @@ public class CandidateDTORequest extends BaseRequest {
   public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
+
+  public void setPositionIds(List<String> positionIds) {
+    this.positionIds = positionIds;
+  }
+
 
 }

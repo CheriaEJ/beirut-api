@@ -96,6 +96,10 @@
   </build>
   <dependencies>
     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.gdn.x.beirut</groupId>
       <artifactId>beirut-rest-web-model</artifactId>
     </dependency>
@@ -115,6 +119,10 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
       <version>4.2.3</version>
@@ -129,5 +137,15 @@
       <artifactId>httpmime</artifactId>
       <version>4.2.3</version>
     </dependency>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+	    <groupId>commons-io</groupId>
+	    <artifactId>commons-io</artifactId>
+	    <version>2.5</version>
+	</dependency>
   </dependencies>
 </project>

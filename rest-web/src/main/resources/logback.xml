@@ -72,7 +72,7 @@
     <appender-ref ref="cache" />
   </logger>
 
-  <logger name="com.gdn" level="info" additivity="false">
+  <logger name="com.gdn" level="trace" additivity="false">
     <appender-ref ref="app" />
   </logger>
   

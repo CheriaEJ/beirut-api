@@ -1,95 +1,68 @@
 package com.gdn.x.beirut.entities;
 
-import java.util.Arrays;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.gdn.common.base.entity.GdnBaseEntity;
 
 @Entity
-@Table(name = "CandidateDetail")
-public class CandidateDetail extends GdnBaseEntity {
+@Table(name = CandidateDetail.TABLE_NAME)
+public class CandidateDetail implements Serializable {
 
-  public static final String CANDIDATE_ID = "candidate_id";
+  private static final long serialVersionUID = -5841108367030595782L;
+  public static final String TABLE_NAME = "candidate_detail";
+  public static final String COLUMN_CONTENT = "content";
 
-  public static final String CONTENT = "content";
+  @Id
+  private String id;
 
-  @OneToOne
-  @JoinColumn(name = CandidateDetail.CANDIDATE_ID)
-  private Candidate candidate;
-
-  @Column(name = CandidateDetail.CONTENT)
+  @Lob
+  @Column(name = CandidateDetail.COLUMN_CONTENT, nullable = false, length = 12000)
   private byte[] content;
 
+
+  @MapsId
+  @OneToOne
+  @JoinColumn(name = GdnBaseEntity.ID)
+  private Candidate candidate;
+
   public CandidateDetail() {
-    super();
+    // nothing to do here
   }
 
-  public CandidateDetail(String STORE_ID) {
-    super();
-    this.setStoreId(STORE_ID);
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (!super.equals(obj))
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    final CandidateDetail other = (CandidateDetail) obj;
-    if (candidate == null) {
-      if (other.candidate != null)
-        return false;
-    } else if (!candidate.equals(other.candidate))
-      return false;
-    if (!Arrays.equals(content, other.content))
-      return false;
-    return true;
+  public CandidateDetail(Candidate candidate) {
+    this.candidate = candidate;
   }
 
   public Candidate getCandidate() {
     return candidate;
   }
 
-
   public byte[] getContent() {
-    return this.content;
+    return content;
   }
 
-
-  public Candidate getIdCandidate() {
-    return this.candidate;
+  public String getId() {
+    return id;
   }
-
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
-    result = prime * result + Arrays.hashCode(content);
-    return result;
-  }
-
 
   public void setCandidate(Candidate candidate) {
     this.candidate = candidate;
   }
 
-
   public void setContent(byte[] content) {
     this.content = content;
   }
 
-
-  public void setIdCandidate(Candidate idCandidate) {
-    this.candidate = idCandidate;
+  public void setId(String id) {
+    this.id = id;
   }
-
 }

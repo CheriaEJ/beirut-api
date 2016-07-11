@@ -2,25 +2,25 @@ package com.gdn.x.beirut.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gdn.x.beirut.entities.Position;
 
 public interface PositionDAO extends JpaRepository<Position, String> {
+  Position findByIdAndStoreIdAndMarkForDelete(String id, String storeId, boolean markForDelete);
 
-  Position findByIdAndMarkForDelete(String id, boolean bool);
+  List<Position> findByStoreId(String storeId);
 
-  List<Position> findByMarkForDelete(boolean bool);
-  // @Query(value = "SELECT id FROM CandidatePosition WHERE id = ?1 and markForDelete = ?2",
-  // nativeQuery = true)
-  // List<CandidatePosition> findByIDAndMarkForDelete(String id, boolean bool);
-  //
-  // @Query(value = "SELECT position_id FROM CandidatePosition WHERE position_id = ?1 and
-  // markForDelete = ?2", nativeQuery = true)
-  // List<String> findByPositionIDAndMarkForDelete(String id, boolean bool);
+  Page<Position> findByStoreId(String storeId, Pageable pageable);
 
-  List<Position> findByTitleAndMarkForDeleteNot(String title, boolean bool);
+  Position findByStoreIdAndId(String storeId, String id);
 
-  List<Position> findByTitleContainingAndMarkForDelete(String title, boolean bool);
+  List<Position> findByStoreIdAndMarkForDelete(String storeId, boolean bool);
 
+  List<Position> findByTitleContainingAndStoreIdAndMarkForDelete(String title, String storeId,
+      boolean bool);
+
+  List<Position> getAllPositionByStoreId(String storeId);
 }
