@@ -7,12 +7,7 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
-<<<<<<< HEAD
-		http://www.ryantenney.com/schema/metrics http://www.ryantenney.com/schema/metrics/metrics-3.0.xsd">
-  <import resource="classpath:gdn-jpa-configuration.xml" />
-  <bean id="dozerMapper" class ="org.dozer.DozerBeanMapper"/>
-  
-=======
+
 		http://www.ryantenney.com/schema/metrics http://www.ryantenney.com/schema/metrics/metrics-3.0.xsd
 		http://www.springframework.org/schema/data/solr http://www.springframework.org/schema/data/solr/spring-solr.xsd">
   <context:property-placeholder
@@ -25,7 +20,7 @@
   <import resource="classpath:*gdn-solr-configuration.xml" />
   <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
   <solr:repositories base-package="com.gdn.x.beirut.solr.dao" multicore-support="true" />
->>>>>>> a53d522d7aab620bb9c6bcfcf834701917be7b54
+
   <jpa:repositories base-package="com.gdn.x.beirut.dao" />
   <context:component-scan base-package="com.gdn.x.beirut.services" />
   <context:component-scan base-package="com.gdn.x.beirut.solr.services" />

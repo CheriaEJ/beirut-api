@@ -226,11 +226,6 @@ public class BeirutApiClientTest {
   }
 
   @Test
-  public void testFindCandidateByCreatedDateBetweenAndStoreId() throws Exception {
-    // TODO pake start sama end yang ada di attribut
-  }
-
-  @Test
   public void testGetAllCandidateByStoreIdAndMarkForDeleteWithPageable() throws Exception {
     this.additionalRequestParam = new HashMap<String, String>();
     this.additionalRequestParam.put("markForDelete", String.valueOf(MARK_FOR_DELETE));
