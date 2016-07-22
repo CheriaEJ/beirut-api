@@ -216,6 +216,7 @@ public class CandidateServiceTest {
     Mockito.verifyNoMoreInteractions(this.positionDao);
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testApplyNewPosition() throws Exception {
     List<String> positionIds = new ArrayList<>();
