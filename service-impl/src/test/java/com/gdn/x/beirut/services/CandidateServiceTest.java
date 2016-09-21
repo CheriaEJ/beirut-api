@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.UUID;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
@@ -37,7 +36,6 @@ import com.gdn.x.beirut.entities.CandidateDetail;
 import com.gdn.x.beirut.entities.CandidatePosition;
 import com.gdn.x.beirut.entities.Position;
 import com.gdn.x.beirut.entities.Status;
-import com.gdn.x.beirut.entities.StatusLog;
 
 public class CandidateServiceTest {
 
@@ -65,6 +63,9 @@ public class CandidateServiceTest {
 
   @Mock
   private PositionDAO positionDao;
+
+  @Mock
+  private EventService eventService;
 
   @Mock
   private DomainEventPublisher domainEventPublisher;
@@ -216,44 +217,8 @@ public class CandidateServiceTest {
     Mockito.verifyNoMoreInteractions(this.positionDao);
   }
 
-  @SuppressWarnings("deprecation")
   @Test
   public void testApplyNewPosition() throws Exception {
-    List<String> positionIds = new ArrayList<>();
-    for (int i = 0; i < 3; i++) {
-      positionIds.add(UUID.randomUUID().toString());
-    }
-    List<Position> positions = new ArrayList<>();
-    int i = 1;
-    for (String string : positionIds) {
-      Position newPosition = new Position();
-      newPosition.setId(string);
-      newPosition.setTitle("Title" +i);
-      positions.add(newPosition);
-      i++;
-    }
-    Mockito.when(this.candidateDao.findOne(ID)).thenReturn(candidate);
-    Mockito.when(this.positionDao.findAll()).thenReturn(positions);
-    for (Position position : positions) {
-      CandidatePosition candidatePosition =
-          new CandidatePosition(candidate, position, candidate.getStoreId());
-      StatusLog statusLog = new StatusLog();
-      statusLog.setStoreId(candidate.getStoreId());
-      statusLog.setCandidatePosition(candidatePosition);
-      statusLog.setStatus(Status.APPLY);
-      candidate.getCandidatePositions().add(candidatePosition);
-    }
-    Mockito.when(this.candidateDao.save(candidate)).thenReturn(candidate);
-    Candidate result = this.candidateService.applyNewPosition(ID, positionIds);
-    //White box
-    Mockito.verify(this.candidateDao,times(1)).findOne(ID);
-    Mockito.verify(this.positionDao,times(1)).findAll();
-    Mockito.verify(this.candidateDao,times(1)).save(candidate);
-    //Black box
-    Assert.assertTrue(result.getId().equals(ID));
-    Assert.assertTrue(result.getFirstName().equals(FIRST_NAME));
-    Assert.assertTrue(result.getLastName().equals(LAST_NAME));
-    /*
     Candidate candidate = new Candidate();
     candidate.setId(ID);
     candidate.setStoreId(STORE_ID);
@@ -292,9 +257,7 @@ public class CandidateServiceTest {
     verify(this.positionDao, times(3)).findAll(positionIds);
     verify(this.candidateDao, times(3)).save(candidate);
     // verify(this.candidateDao, times(3)).find
-     *
-     */
-    }
+  }
 
   @Test(expected = Exception.class)
   public void testApplyNewPositionException() throws Exception {

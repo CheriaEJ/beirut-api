@@ -20,7 +20,6 @@ public class CandidateDetail implements Serializable {
   private static final long serialVersionUID = -5841108367030595782L;
   public static final String TABLE_NAME = "candidate_detail";
   public static final String COLUMN_CONTENT = "content";
-
   @Id
   private String id;
 
@@ -28,7 +27,11 @@ public class CandidateDetail implements Serializable {
   @Column(name = CandidateDetail.COLUMN_CONTENT, nullable = false, length = 12000)
   private byte[] content;
 
+  @Column
+  private String mediaType;
 
+  @Column
+  private String filename;
   @MapsId
   @OneToOne
   @JoinColumn(name = GdnBaseEntity.ID)
@@ -50,8 +53,16 @@ public class CandidateDetail implements Serializable {
     return content;
   }
 
+  public String getFilename() {
+    return filename;
+  }
+
   public String getId() {
     return id;
+  }
+
+  public String getMediaType() {
+    return mediaType;
   }
 
   public void setCandidate(Candidate candidate) {
@@ -62,7 +73,15 @@ public class CandidateDetail implements Serializable {
     this.content = content;
   }
 
+  public void setFilename(String filename) {
+    this.filename = filename;
+  }
+
   public void setId(String id) {
     this.id = id;
+  }
+
+  public void setMediaType(String mediaType) {
+    this.mediaType = mediaType;
   }
 }

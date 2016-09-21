@@ -6,6 +6,8 @@ public class CandidateDetailDTOResponse extends BaseResponse {
 
   private static final long serialVersionUID = 808732336048185462L;
   private byte[] content;
+  private String mediaType;
+  private String filename;
 
   public CandidateDetailDTOResponse() {
     super();
@@ -20,8 +22,24 @@ public class CandidateDetailDTOResponse extends BaseResponse {
     return content;
   }
 
+  private String getFilename() {
+    return filename;
+  }
+
+  public String getMediaType() {
+    return mediaType;
+  }
+
   public void setContent(byte[] content) {
     this.content = content;
+  }
+
+  private void setFilename(String filename) {
+    this.filename = filename;
+  }
+
+  public void setMediaType(String mediaType) {
+    this.mediaType = mediaType;
   }
 
 }

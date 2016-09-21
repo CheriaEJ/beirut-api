@@ -24,6 +24,10 @@ public class ApplyNewPosition extends GdnBaseDomainEventModel {
 
   private Date createdDate;
 
+  private String jobType;
+
+  private String jobDivision;
+
   private String title;
 
   private String status;

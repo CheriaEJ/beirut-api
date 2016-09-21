@@ -1,4 +1,3 @@
-
 package com.gdn.x.beirut.entities;
 
 import javax.persistence.Column;

@@ -30,7 +30,6 @@ import com.gdn.common.web.param.PageableHelper;
 import com.gdn.common.web.wrapper.response.GdnRestListResponse;
 import com.gdn.x.beirut.dto.request.ListStringRequest;
 import com.gdn.x.beirut.dto.request.PositionDTORequest;
-import com.gdn.x.beirut.dto.request.UpdatePositionModelDTORequest;
 import com.gdn.x.beirut.dto.response.PositionDTOResponse;
 import com.gdn.x.beirut.entities.Candidate;
 import com.gdn.x.beirut.entities.CandidatePosition;
@@ -103,6 +102,7 @@ public class PositionControllerTest {
     this.position.setId(ID);
     this.position.setTitle(TITLE);
     this.positions.add(this.position);
+    this.positionDTORequest.setId(ID);
     this.positionDTORequest.setTitle("title");
     this.positionDTORequests.add(positionDTORequest);
   }
@@ -242,7 +242,7 @@ public class PositionControllerTest {
   @Test
   public void testInsertNewPosition() throws Exception {
     String uri = "insertNewPosition";
-    String positionDTORequestJson = "{\"title\":\"title\"}";
+    String positionDTORequestJson = "{\"id\":\"id\",\"title\":\"title\"}";
     Position temp = this.gdnMapper.deepCopy(this.positionDTORequest, Position.class);
     Mockito.when(this.positionService.insertNewPosition(temp)).thenReturn(temp);
     this.mockMVC.perform(MockMvcRequestBuilders.post(UriBasePath + uri)
@@ -260,22 +260,22 @@ public class PositionControllerTest {
     objectMapper = new ObjectMapper();
 
     String uri = "updatePosition";
-    String updatePositionRequestJson = "{\"idPositionTarget\":\"id\",\"title\":\"title\"}";
-    UpdatePositionModelDTORequest updatePositionModelDTORequest =
-        objectMapper.readValue(updatePositionRequestJson, UpdatePositionModelDTORequest.class);
+    String updatePositionRequestJson = "{\"id\":\"id\",\"title\":\"title\"}";
+    PositionDTORequest updatePositionModelDTORequest =
+        objectMapper.readValue(updatePositionRequestJson, PositionDTORequest.class);
 
-    Mockito.when(this.positionService.updatePositionTitle(STORE_ID,
-        updatePositionModelDTORequest.getIdPositionTarget(),
-        updatePositionModelDTORequest.getTitle())).thenReturn(true);
+    Mockito
+        .when(this.positionService.updatePositionTitle(STORE_ID,
+            updatePositionModelDTORequest.getId(), updatePositionModelDTORequest.getTitle()))
+        .thenReturn(true);
     this.mockMVC.perform(MockMvcRequestBuilders.post(UriBasePath + uri)
         .accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
         .param("clientId", CLIENT_ID).param("storeId", STORE_ID).param("requestId", REQUEST_ID)
         .param("channelId", CHANNEL_ID).param("username", USERNAME)
         .content(updatePositionRequestJson)).andExpect(MockMvcResultMatchers.status().isOk());
     this.positionController.updatePosition(CLIENT_ID, STORE_ID, REQUEST_ID, CHANNEL_ID, USERNAME,
-        updatePositionModelDTORequest);
+        positionDTORequest);
     Mockito.verify(this.positionService, Mockito.times(2)).updatePositionTitle(STORE_ID,
-        updatePositionModelDTORequest.getIdPositionTarget(),
-        updatePositionModelDTORequest.getTitle());
+        updatePositionModelDTORequest.getId(), updatePositionModelDTORequest.getTitle());
   }
 }

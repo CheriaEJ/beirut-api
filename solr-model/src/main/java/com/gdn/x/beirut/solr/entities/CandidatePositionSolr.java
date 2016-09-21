@@ -33,6 +33,12 @@ public class CandidatePositionSolr extends GdnBaseSolrEntity {
   private Date createdDate;
 
   @Field
+  private String jobType;
+
+  @Field
+  private String jobDivision;
+
+  @Field
   private String title;
 
   @Field
@@ -56,6 +62,14 @@ public class CandidatePositionSolr extends GdnBaseSolrEntity {
 
   public String getIdPosition() {
     return idPosition;
+  }
+
+  private String getJobDivision() {
+    return jobDivision;
+  }
+
+  private String getJobType() {
+    return jobType;
   }
 
   public String getLastName() {
@@ -92,6 +106,14 @@ public class CandidatePositionSolr extends GdnBaseSolrEntity {
 
   public void setIdPosition(String idPosition) {
     this.idPosition = idPosition;
+  }
+
+  private void setJobDivision(String jobDivision) {
+    this.jobDivision = jobDivision;
+  }
+
+  private void setJobType(String jobType) {
+    this.jobType = jobType;
   }
 
   public void setLastName(String lastName) {

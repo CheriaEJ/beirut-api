@@ -29,6 +29,10 @@ public class CandidatePositionSolrDTOResponse extends BaseResponse {
 
   private String status;
 
+  private String jobType;
+
+  private String jobDivision;
+
   @Override
   public Date getCreatedDate() {
     return createdDate;
@@ -48,6 +52,14 @@ public class CandidatePositionSolrDTOResponse extends BaseResponse {
 
   public String getIdPosition() {
     return idPosition;
+  }
+
+  private String getJobDivision() {
+    return jobDivision;
+  }
+
+  private String getJobType() {
+    return jobType;
   }
 
   public String getLastName() {
@@ -85,6 +97,14 @@ public class CandidatePositionSolrDTOResponse extends BaseResponse {
 
   public void setIdPosition(String idPosition) {
     this.idPosition = idPosition;
+  }
+
+  private void setJobDivision(String jobDivision) {
+    this.jobDivision = jobDivision;
+  }
+
+  private void setJobType(String jobType) {
+    this.jobType = jobType;
   }
 
   public void setLastName(String lastName) {
