@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +30,6 @@ import com.gdn.x.beirut.dto.request.CandidateDTORequest;
 import com.gdn.x.beirut.dto.request.ListStringRequest;
 import com.gdn.x.beirut.dto.request.PositionDTORequest;
 import com.gdn.x.beirut.dto.request.UpdateCandidateStatusModelDTORequest;
-import com.gdn.x.beirut.dto.request.UpdatePositionModelDTORequest;
 import com.gdn.x.beirut.dto.response.CandidateDTOResponse;
 import com.gdn.x.beirut.dto.response.CandidateDTOResponseWithoutDetail;
 import com.gdn.x.beirut.dto.response.CandidatePositionDTOResponse;
@@ -286,20 +284,7 @@ public class BeirutApiClient extends GdnBaseRestCrudClient {
         objectMapper.writeValueAsString(candidateDTORequestString));
     HttpPost httpPost = generateMultipartHttpPost("/candidate/insertNewCandidate", content,
         requestId, filename, username, additionalParameterMap);
-    CloseableHttpResponse response = getHttpClient().execute(httpPost);
-    if (response.getStatusLine().getStatusCode() == 200) {
-      return objectMapper.readValue(EntityUtils.toString(response.getEntity()),
-          new TypeReference<GdnRestListResponse>() {});
-    } else {
-      String responseText = null;
-      if (response.getEntity() != null) {
-        responseText = EntityUtils.toString(response.getEntity());
-      }
-      LOG.error("server give bad response code, code : {}, message : {}, body: {}",
-          new Object[] {response.getStatusLine().getStatusCode(),
-              response.getStatusLine().getReasonPhrase(), responseText});
-      throw new ApplicationException(ErrorCategory.UNSPECIFIED, "check the log");
-    }
+    return sendMultipartFile(httpPost);
   }
 
   public GdnBaseRestResponse insertNewPosition(String requestId, String username,
@@ -308,6 +293,23 @@ public class BeirutApiClient extends GdnBaseRestCrudClient {
     // System.out.println("INI PATHNYAAA :" + uri.toString());
     return invokePostType(uri, positionDTORequest, PositionDTORequest.class,
         MediaType.APPLICATION_JSON_VALUE, typeRef);
+  }
+
+  private GdnBaseRestResponse sendMultipartFile(HttpPost httpPost)throws Exception{
+    CloseableHttpResponse response = getHttpClient().execute(httpPost);
+    if (response.getStatusLine().getStatusCode() == 200) {
+      return objectMapper.readValue(EntityUtils.toString(response.getEntity()),
+              new TypeReference<GdnRestListResponse>() {});
+    } else {
+      String responseText = null;
+      if (response.getEntity() != null) {
+        responseText = EntityUtils.toString(response.getEntity());
+      }
+      LOG.error("server give bad response code, code : {}, message : {}, body: {}",
+              new Object[] {response.getStatusLine().getStatusCode(),
+                      response.getStatusLine().getReasonPhrase(), responseText});
+      throw new ApplicationException(ErrorCategory.UNSPECIFIED, "check the log");
+    }
   }
 
   public void setObjectMapper(ObjectMapper objectMapper) {
@@ -319,12 +321,18 @@ public class BeirutApiClient extends GdnBaseRestCrudClient {
   }
 
   public GdnBaseRestResponse updateCandidateDetail(String requestId, String username,
-      String idCandidate, MultipartFile file) throws Exception {
-    HashMap<String, String> map = new HashMap<String, String>();
-    map.put("idCandidate", idCandidate);
-    URI uri = generateURI("/candidate/updateCandidateDetail", requestId, username, map);
-    return invokePostType(uri, file, MultipartFile.class, MediaType.APPLICATION_JSON_VALUE,
-        typeRef);
+      String idCandidate, String filename, byte[] content) throws Exception {
+    HashMap<String, String> additionalParameterMap = new HashMap<String, String>();
+    additionalParameterMap.put("idCandidate",
+            idCandidate);
+    HttpPost httpPost = generateMultipartHttpPost("/candidate/updateCandidateDetail", content,
+            requestId, filename, username, additionalParameterMap);
+    return sendMultipartFile(httpPost);
+//    HashMap<String, String> map = new HashMap<String, String>();
+//    map.put("idCandidate", idCandidate);
+//    URI uri = generateURI("/candidate/updateCandidateDetail", requestId, username, map);
+//    return invokePostType(uri, file, MultipartFile.class, MediaType.APPLICATION_JSON_VALUE,
+//        typeRef);
   }
 
   public GdnBaseRestResponse updateCandidateInformation(String requestId, String username,
@@ -342,9 +350,9 @@ public class BeirutApiClient extends GdnBaseRestCrudClient {
   }
 
   public GdnBaseRestResponse updatePosition(String requestId, String username,
-      UpdatePositionModelDTORequest updatePositionModelDTORequest) throws Exception {
+      PositionDTORequest positionDTORequest) throws Exception {
     URI uri = generateURI("/position/updatePosition", requestId, username, null);
-    return invokePostType(uri, updatePositionModelDTORequest, UpdatePositionModelDTORequest.class,
-        MediaType.APPLICATION_JSON_VALUE, typeRef);
+    return invokePostType(uri, positionDTORequest, PositionDTORequest.class,
+    MediaType.APPLICATION_JSON_VALUE, typeRef);
   }
 }
