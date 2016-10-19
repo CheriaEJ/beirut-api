@@ -2,73 +2,31 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:context="http://www.springframework.org/schema/context" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
   xmlns:task="http://www.springframework.org/schema/task" xmlns:metrics="http://www.ryantenney.com/schema/metrics"
+  xmlns:solr="http://www.springframework.org/schema/data/solr"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
-		http://www.ryantenney.com/schema/metrics http://www.ryantenney.com/schema/metrics/metrics-3.0.xsd">
-  <import resource="classpath:gdn-jpa-configuration.xml" />
-  <jpa:repositories base-package="com.gdn.x.productcategorybase.repository" />
-  <context:component-scan base-package="com.gdn.x.productcategorybase.service" />
-  <context:component-scan base-package="com.gdn.x.productcategorybase.config" />
-  <context:property-placeholder location="file:///${X_CONF_DIR}/product-category-base/product-category-database.properties"
+		http://www.ryantenney.com/schema/metrics http://www.ryantenney.com/schema/metrics/metrics-3.0.xsd
+		http://www.springframework.org/schema/data/solr http://www.springframework.org/schema/data/solr/spring-solr.xsd">
+  <context:property-placeholder
+    location="file:///${X_CONF_DIR}/beirut/beirut.properties,file:///${X_CONF_DIR}/beirut/domain-event-publisher.properties,file:///${X_CONF_DIR}/beirut/domain-event-subscriber.properties,file:///${X_CONF_DIR}/beirut/solr.properties"
     properties-ref="applicationDefaultProperties" ignore-resource-not-found="true" ignore-unresolvable="true" />
-  <bean id="applicationConfig" class="com.gdn.x.productcategorybase.service.config.ApplicationConfig">
-    <property name="regenerateWhenDeleteAllowedAttribute" value="${applicationconfig.regenerateWhenDeleteAllowedAttribute}"></property>
-  </bean>
-  <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-    <constructor-arg ref="dataSource" />
-  </bean>
-  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-    <constructor-arg ref="dataSource" />
-  </bean>
-  <bean id="categoryPublisherNotification" class="com.gdn.x.productcategorybase.publisher.PublisherNotification">
-    <constructor-arg index="0" value="${publisher.username}" />
-    <constructor-arg index="1" value="${publisher.password}" />
-    <constructor-arg index="2" value="${publisher.hostname}" />
-    <constructor-arg index="3" value="${publisher.port}" />
-    <constructor-arg index="4" value="${publisher.clientId}" />
-    <constructor-arg index="5" value="${publisher.channelId}" />
-    <constructor-arg index="6" value="${publisher.storeId}" />
-    <constructor-arg index="7" value="${publisher.category.queueName}" />
-    <constructor-arg index="8" value="${publisher.category.exchange}" />
-    <constructor-arg index="9" value="${publisher.activated}" />
-  </bean>
-  <bean id="productPublisherNotification" class="com.gdn.x.productcategorybase.publisher.PublisherNotification">
-    <constructor-arg index="0" value="${publisher.username}" />
-    <constructor-arg index="1" value="${publisher.password}" />
-    <constructor-arg index="2" value="${publisher.hostname}" />
-    <constructor-arg index="3" value="${publisher.port}" />
-    <constructor-arg index="4" value="${publisher.clientId}" />
-    <constructor-arg index="5" value="${publisher.channelId}" />
-    <constructor-arg index="6" value="${publisher.storeId}" />
-    <constructor-arg index="7" value="${publisher.product.queueName}" />
-    <constructor-arg index="8" value="${publisher.product.exchange}" />
-    <constructor-arg index="9" value="${publisher.activated}" />
-  </bean>
-  <bean id="productItemPublisherNotification" class="com.gdn.x.productcategorybase.publisher.PublisherNotification">
-    <constructor-arg index="0" value="${publisher.username}" />
-    <constructor-arg index="1" value="${publisher.password}" />
-    <constructor-arg index="2" value="${publisher.hostname}" />
-    <constructor-arg index="3" value="${publisher.port}" />
-    <constructor-arg index="4" value="${publisher.clientId}" />
-    <constructor-arg index="5" value="${publisher.channelId}" />
-    <constructor-arg index="6" value="${publisher.storeId}" />
-    <constructor-arg index="7" value="${publisher.productItem.queueName}" />
-    <constructor-arg index="8" value="${publisher.productItem.exchange}" />
-    <constructor-arg index="9" value="${publisher.activated}" />
-  </bean>
+  <import resource="classpath:gdn-jpa-configuration.xml" />
+  <import resource="classpath:*domain-event-publisher-context.xml" />
+  <import resource="classpath:*gdn-dozer-configuration.xml" />
+  <import resource="classpath:*domain-event-subscriber-context.xml" />
+  <import resource="classpath:*gdn-solr-configuration.xml" />
+  <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+  <solr:repositories base-package="com.gdn.x.beirut.solr.dao" multicore-support="true" />
+  <jpa:repositories base-package="com.gdn.x.beirut.dao" />
+  <context:component-scan base-package="com.gdn.x.beirut.services" />
+  <context:component-scan base-package="com.gdn.x.beirut.solr.services" />
+  <!-- <context:component-scan base-package="com.gdn.x.productcategorybase.config" /> -->
   <task:executor id="taskExecutor" queue-capacity="10" pool-size="${thread.pool.size}" rejection-policy="CALLER_RUNS" />
   <bean id="executorService" class="org.springframework.core.task.support.ExecutorServiceAdapter">
     <constructor-arg ref="taskExecutor" />
   </bean>
-  <metrics:register metric-registry="metric-registry">
-    <bean metrics:name="jvm.gc" class="com.codahale.metrics.jvm.GarbageCollectorMetricSet" />
-    <bean metrics:name="jvm.memory" class="com.codahale.metrics.jvm.MemoryUsageGaugeSet" />
-    <bean metrics:name="jvm.thread-states" class="com.codahale.metrics.jvm.ThreadStatesGaugeSet" />
-    <bean metrics:name="jvm.fd.usage" class="com.codahale.metrics.jvm.FileDescriptorRatioGauge" />
-    <bean metrics:name="jvm.class-loading" class="com.codahale.metrics.jvm.ClassLoadingGaugeSet" />
-  </metrics:register>
   <bean id="healthCheckRedis" class="com.gdn.x.base.rest.web.healthcheck.HealthCheckRedis" />
   <bean id="healthCheckPostgreSql" class="com.gdn.x.base.rest.web.healthcheck.HealthCheckPostgreSql" />
 </beans>

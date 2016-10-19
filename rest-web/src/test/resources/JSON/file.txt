@@ -1,0 +1,164 @@
+JUnit test
+
+DAO yang di ter tuh kyk yg fitur findByName()
+
+DAO tidak ada yang di mock.
+Kalo di controller brati yang di mock adalah servicenya
+
+
+Khusus DAO (Taronya di DAO JPA)(ADA CEREMONYNYA)
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {TestConfig.class})
+@TestExecutionListeners(listeners = {DependencyInjectionTestExecutionListener.class, //buat support yang @Autowired2 an
+ DirtiesContextTestExecutionListener.class, //supaya tiap kali jalan dibersihihn kalo ga salah
+ TransactionalTestExecutionListener.class})//mau support yang transaction.
+@Transactional(readOnly = false)
+public class DAO/Repository
+
+untuk testConfig
+@EnableJpaAuditing 
+
+ga butuh named jdbcTemplate
+
+
+biasanya di dao di masukkin dulu datanya
+
+biasanya di @Before isinya save
+
+Di DAO biasanya ga ada @After
+
+
+Testing Service Impl
+	
+	Untuk mock ada 2 cara
+		1 make annotation
+		2 declarative
+	
+	@InjectMock (semua yang di mock bakal masuk k injectMock)
+	cth: @Mock
+		 private String bla;
+		 @InjectMock
+		 private KelasYangBakalDimasukkin masuk;
+		 
+	tapi kalo misalnya di kelas yang bkl di masukkin ga ada, mocknya ga akan dimasukkin
+	
+	Service boleh mock service, memang kebanyakan yang di mock DAO tp ttp bisa service make service lain
+	
+	
+	MockitoAnnotation.initMocks(this);
+	
+	di @After
+	Mockito.verifyNoMoreInteractions([mocknya])
+	tergantung apa yang dipake di method service tsb
+
+Testing Controller  (Ada CEREMONYNYA)
+
+	ceremonynya
+		-initmock
+		-standAloneSetup
+		
+	Controller gunanya cuma mapping
+	sebisa mungkin ga usah ada logic
+
+	Jackson, buat transform JSON k object, sama dari object ke JSON
+	
+Base Entity
+Setiap Entity harus extend Base Entity
+
+	Base Entity ada fitur : 
+		-auditing.
+		-ga perlu make annotation @id lagi.
+		-storeId, channelId, clientId, requestId, username (Mandatory Parameter)
+		-yang di pake Base Entity cuma storeId, sama Username
+		-sisanya untuk logging, authorization, authentication(tapi ntr lagi)
+		-createdBy updatedBy bakal langsung ke isi
+		-harusnya kalo delete(Mark for Delete), make update(ngeflag aja kalo udah ke delete)
+		-lockingnya udah ada
+ ____________		
+|SOLR | Redis|
+|_____|______|
+ x-framework
+ 
+	CQRS
+ ____________
+|Read | Write|
+|_____|______|
++indes  <--------- insert Update
+        eventBased
+	
+	
+Apache POI buat baca pdf dll btuh buat baca doc
+
+
+ada 2 detail candidate
+
+get CandidateDetailPosition
+get CandidateDetailContent
+get CandidateDetailStatus
+
+biar tau hubungan yang exactnya yang mana
+
+package name: com.gdn.x.beirut.<>
+
+branch name: develop
+
+ ________________
+|yg hrs d kerjain|
+|________________|
+
+-bikin buat CUD
+	-Entity	
+		-Candidate 
+		-CandidateDetail 
+		-StatusLog 
+		-Position 
+		-CandidatePosition 
+	-DAO/Repository 
+		-CandidateDAO
+		-PositionDAO
+	-Service
+		-CandidateService
+			-insertNewCandidate
+			-updateCandidate 
+				-DetailStatusCandidate
+					-insertNewStatus
+					-updateCandidatePositionStatus
+			-markForDeleteCandidatePosition
+			-markForDeleteCandidate 
+		-PositionService
+			-insertNewPosition
+			-updatePosition
+			-markForDeletePosition
+			-markForDeleteStatus
+	-Controller
+		-CandidateController
+			-insert
+			-update
+			-delete
+		-PositionController
+			-insert
+			-update
+			-delete
+-Curriculum vitae Candidate searching 
+	-search by Last/First Nama
+		buat method di CandidateDAO, CandidateService, CandidateController
+	-search by no. telp
+		buat method di CandidateDAO, CandidateService, CandidateController
+	-search by range timestamp created
+		buat method di CandidateDAO, CandidateService, CandidateController
+	-search by Email Address
+		buat method di CandidateDAO, CandidateService, CandidateController
+	-search by id
+		buat method di CandidateDAO, CandidateService, CandidateController
+-modifikasi dan Auditing status
+	-insert new statusLog bulk
+		-update Status CandidatePosition
+			buat method di CandidateService, CandidateController
+-reporting tracking status of process of candidate
+	-get all CandidateDetailStatus
+	
+
+
+
+

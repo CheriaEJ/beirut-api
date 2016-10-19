@@ -14,6 +14,7 @@
 
   <build>
     <finalName>${project.name}</finalName>
+	<!--
 	<resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -27,6 +28,7 @@
         </includes>
       </resource>
     </resources>
+	-->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -62,6 +64,19 @@
     <dependency>
       <groupId>com.gdn.x.beirut</groupId>
       <artifactId>beirut-dao-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.gdn.x.beirut</groupId>
+      <artifactId>beirut-solr-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.gdn.x.beirut</groupId>
+      <artifactId>beirut-solr-service-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.gdn.x.beirut</groupId>
+      <artifactId>beirut-solr-service-impl</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>com.gdn.x.beirut</groupId>
@@ -207,5 +222,9 @@
       <artifactId>javasimon-console-embed</artifactId>
       <scope>runtime</scope>
     </dependency>
+	<dependency>
+		<groupId>com.gdn.x.beirut</groupId>
+		<artifactId>beirut-domain-event</artifactId>
+	</dependency>		
   </dependencies>
 </project>

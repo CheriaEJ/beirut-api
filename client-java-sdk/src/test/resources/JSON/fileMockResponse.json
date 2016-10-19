@@ -1,0 +1,6 @@
+{
+	"success"		: true,
+	"errorCode"		: 200,
+	"requestId"	 	: "thisIsDummy",
+	"errorMessage" 	: null
+}

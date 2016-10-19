@@ -7,9 +7,9 @@
   </appender>
 
   <appender name="spring" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${catalina.home:-.}/logs/x/product-category-base/spring.log</file>
+    <file>${catalina.home:-.}/logs/x/beirut/spring.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${catalina.home:-.}/logs/x/archive/product-category-base/spring.%d{yyyy-MM-dd}.old.log</fileNamePattern>
+      <fileNamePattern>${catalina.home:-.}/logs/x/archive/beirut/spring.%d{yyyy-MM-dd}.old.log</fileNamePattern>
     </rollingPolicy>
     <encoder>
       <pattern>[%X{key}]%date{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX", UTC} %-5level %logger{35} - %msg %n</pattern>
@@ -17,9 +17,9 @@
   </appender>
 
   <appender name="all" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${catalina.home:-.}/logs/x/product-category-base/all.log</file>
+    <file>${catalina.home:-.}/logs/x/beirut/all.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${catalina.home:-.}/logs/x/archive/product-category-base/all.%d{yyyy-MM-dd}.old.log</fileNamePattern>
+      <fileNamePattern>${catalina.home:-.}/logs/x/archive/beirut/all.%d{yyyy-MM-dd}.old.log</fileNamePattern>
     </rollingPolicy>
     <encoder>
       <pattern>[%X{key}]%date{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX", UTC} %-5level %logger{35} - %msg %n</pattern>
@@ -27,9 +27,9 @@
   </appender>
 
   <appender name="app" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${catalina.home:-.}/logs/x/product-category-base/app.log</file>
+    <file>${catalina.home:-.}/logs/x/beirut/app.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${catalina.home:-.}/logs/x/archive/product-category-base/app.%d{yyyy-MM-dd}.old.log</fileNamePattern>
+      <fileNamePattern>${catalina.home:-.}/logs/x/archive/beirut/app.%d{yyyy-MM-dd}.old.log</fileNamePattern>
     </rollingPolicy>
     <encoder>
       <pattern>[%X{key}]%date{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX", UTC} %-5level %logger{35} - %msg %n</pattern>
@@ -37,9 +37,9 @@
   </appender>
 
   <appender name="orm" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${catalina.home:-.}/logs/x/product-category-base/orm.log</file>
+    <file>${catalina.home:-.}/logs/x/beirut/orm.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${catalina.home:-.}/logs/x/archive/product-category-base/orm.%d{yyyy-MM-dd}.old.log</fileNamePattern>
+      <fileNamePattern>${catalina.home:-.}/logs/x/archive/beirut/orm.%d{yyyy-MM-dd}.old.log</fileNamePattern>
     </rollingPolicy>
     <encoder>
       <pattern>[%X{key}]%date{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX", UTC} %-5level %logger{35} - %msg %n</pattern>
@@ -47,9 +47,9 @@
   </appender>
 
   <appender name="cache" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${catalina.home:-.}/logs/x/product-category-base/cache.log</file>
+    <file>${catalina.home:-.}/logs/x/beirut/cache.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${catalina.home:-.}/logs/x/archive/product-category-base/cache.%d{yyyy-MM-dd}.old.log</fileNamePattern>
+      <fileNamePattern>${catalina.home:-.}/logs/x/archive/beirut/cache.%d{yyyy-MM-dd}.old.log</fileNamePattern>
     </rollingPolicy>
     <encoder>
       <pattern>[%X{key}]%date{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX", UTC} %-5level %logger{35} - %msg %n</pattern>
@@ -72,7 +72,7 @@
     <appender-ref ref="cache" />
   </logger>
 
-  <logger name="com.gdn" level="info" additivity="false">
+  <logger name="com.gdn" level="trace" additivity="false">
     <appender-ref ref="app" />
   </logger>
   
